@@ -142,4 +142,13 @@ def cross_correlation(
     # xa = (x - np.mean(x)) / np.std(x)
     # ya = (y - np.mean(y)) / np.std(y)
     # then signal.correlate(xa, ya, mode="full") / N and signal.correlation_lags(...)
-    raise NotImplementedError("cross_correlation")
+    x = np.asarray(x, dtype=float)
+    y = np.asarray(y, dtype=float)
+
+    x_std = (x - np.mean(x)) / np.std(x)
+    y_std = (y - np.mean(y)) / np.std(y)
+
+    r = signal.correlate(x_std, y_std, mode="full") / len(x_std)
+    lags = signal.correlation_lags(len(x_std), len(y_std), mode="full")
+
+    return lags, r
