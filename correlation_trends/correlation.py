@@ -103,7 +103,12 @@ def effective_dof(x: ArrayLike, dt: float, biased: bool = True) -> float:
     # tstar = integral_timescale(x, dt, biased=biased)
     # record = N * dt  (N = number of finite samples)
     # EDOF = record / (2 * T*)   -- the factor of 2 is DOF -> EDOF
-    raise NotImplementedError("effective_dof")
+    x = np.asarray(x, dtype=float)
+    n_finite = np.sum(np.isfinite(x))
+    tstar = integral_timescale(x, dt, biased=biased)
+    record = n_finite * dt
+    return record / (2.0 * tstar)
+
 
 
 def cross_correlation(
