@@ -58,4 +58,7 @@ def remove_seasonal_cycle(da: xr.DataArray, group: str = "TIME.month") -> xr.Dat
     """
     # clim = seasonal_climatology(da, group)
     # then subtract it and add da.mean() back (keep the series' overall level)
-    raise NotImplementedError("remove_seasonal_cycle")
+    climatology = seasonal_climatology(da, group)
+    overall_mean = da.mean()
+    deseasonalised = da.groupby(group) - climatology + overall_mean
+    return deseasonalised

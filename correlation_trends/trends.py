@@ -103,4 +103,29 @@ def trend_with_significance(t: ArrayLike, x: ArrayLike, dt: float) -> TrendResul
     # OLS slope SE:  sqrt( sum(resid**2)/(N-2) / sum((t - t.mean())**2) )
     # effective sample size from the residuals:  n_eff = effective_dof(resid, dt)
     # se_eff = se * sqrt(N / n_eff);  t = slope/se;  p = 2 * stats.t.sf(|t|, dof)
-    raise NotImplementedError("trend_with_significance")
+    t=np.asarray(t, dtype=float)
+    x=np.asarray(x, dtype=float)
+    n= len(x)
+    
+    slope,intercept = fit_trend(t,x)
+    resid = x- (slope* t + intercept)
+    ss_resid = np.sum(resid**2) / (n - 2)
+    ss_t = np.sum((t - t.mean())**2)
+    se = np.sqrt(ss_resid / ss_t)
+
+    n_eff = effective_dof(resid, dt)
+    se_eff = se * np.sqrt(n / n_eff)
+
+    t_naive = slope / se
+    t_eff = slope / se_eff
+
+    p_naive = 2 * stats.t.sf(np.abs(t_naive), df=n - 2)
+    p_eff = 2 * stats.t.sf(np.abs(t_eff), df=n_eff - 2)
+
+    return TrendResult(
+        slope=slope, intercept=intercept,
+        se=se, se_eff=se_eff,
+        p_naive=p_naive, p_eff=p_eff,
+        n_eff=n_eff,
+        t_naive=t_naive, t_eff=t_eff,
+    )
