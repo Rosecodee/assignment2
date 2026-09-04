@@ -1,27 +1,39 @@
-==============================
-Assignment 2 — starter package
-==============================
+# Assignment 2 – Geostrophic Transport and AMOC
 
-*(This folder is generated from ``../solution2/`` — do not edit it by hand;
-edit the solution and re-run ``generate_assignment.py``.)*
+This repository contains the analysis and implementation for Assignment 2, including geostrophic transport calculations, AMOC analysis, correlation, seasonal variability, trend analysis, and statistical significance testing.
 
-Implement the stubbed functions in ``correlation_trends/`` until the tests pass.
+## Repository Structure
 
-Layout
-------
+* `notebook.ipynb` – Main analysis notebook containing the calculations, analysis, and figures.
+* `Geostrophic_transport_and_AMOC.md` – Assignment report in Markdown format. (Unfortunetly converter did a bad job)
+* `Geostrophic_transport_and_AMOC.pdf` – Assignment report in PDF format.
+* `correlation_trends/` – Python package containing the analysis functions:
 
-- ``correlation_trends/`` — the package. Worked helpers (the data loaders, the
-  autocorrelation, the integral timescale, the seasonal climatology, and the
-  geostrophy routines) are provided. You implement the functions that
-  ``raise NotImplementedError``: ``correlation.effective_dof``,
-  ``correlation.cross_correlation``, ``seasonal.remove_seasonal_cycle``, and
-  ``trends.trend_with_significance``.
-- ``tests/`` — ``pytest`` checks that pin each function's contract.
+  * `geostrophy.py` – Geostrophic transport calculations
+  * `correlation.py` – Correlation analysis
+  * `seasonal.py` – Seasonal and climatological analysis
+  * `trends.py` – Trend and statistical significance analysis
+  * `data_io.py` – Data input/output utilities
+* `tests/` – Unit tests for the implemented functions.
+* `figs/` – Figures generated during the analysis.
+* `requirements.txt` – Python dependencies required to run the analysis and tests.
 
-Run::
+## Running the Tests
 
-    pip install -r requirements.txt
-    ruff format . && ruff check .    # format, then lint
-    pytest -q                        # implement until the tests are green
+Install the required dependencies with:
 
-Each stub's docstring states exactly what to return.
+```bash
+pip install -r requirements.txt
+```
+
+Then run the test suite with:
+
+```bash
+pytest
+```
+
+## Report
+
+The full analysis and discussion can be found in:
+
+**`Geostrophic_transport_and_AMOC.pdf`**
